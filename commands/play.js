@@ -11,7 +11,7 @@ module.exports = {
     .addSubcommand(subcommand => {
         return subcommand
             .setName("search")
-            .setDescription("Descubra uma música")
+            .setDescription("Peça uma música")
             .addStringOption(option => {
                 return option
                     .setName("searchterms")
@@ -58,8 +58,8 @@ module.exports = {
             await queue.addTracks(song)
 
             embed
-                .setDescription(`Adicionei **[${song.title}](${song.url})** na queue`)
-                .setThumbnail(song.thumbnail)
+                .setDescription(`Adicionei **[${song.title[0]}](${song.url[0]})** na queue`)
+                .setThumbnail(song.thumbnail[0])
                 .setFooter({text: `Duração: ${song.duration}`})
         }
         else if(interaction.options.getSubcommand() === "playlist"){
@@ -70,18 +70,21 @@ module.exports = {
                 searchEngine: QueryType.YOUTUBE_PLAYLIST,
             })
 
-            if (result.tracks.lenght === 0){
-                await interaction.reply ("Não achei sua playlist men")
+            if (result.tracks.length === 0){
+                await interaction.reply("Não achei sua playlist men")
                 return
             }
 
-            const playlist = result.playlist
-            await queue.addTracks(playlist)
+            const tracks = result.tracks
+            await queue.addTracks(tracks)
 
-            embed
-                .setDescription(`Adicionei **[${playlist.title}](${playlist.url})** na queue`)
-                .setThumbnail(playlist.thumbnail)
-                .setFooter({text: `Duração: ${playlist.duration}`})
+            for (let i = 0; i < tracks.length; i++) {
+                const track = tracks[i];
+                embed
+                    .setDescription(`Adicionei **[${track.title}](${track.url})** na queue`)
+                    .setThumbnail(track.thumbnail)
+                    .setFooter({text: `Duração: ${track.duration}`});
+            }
         }
         else if(interaction.options.getSubcommand() === "search"){
             let url = interaction.options.getString("searchterms")
@@ -100,9 +103,9 @@ module.exports = {
             await queue.addTracks(song)
 
             embed
-                .setDescription(`Adicionei **[${song.title}](${song.url})** na queue`)
-                .setThumbnail(song.thumbnail)
-                .setFooter({text: `Duração: ${song.duration}`})
+                .setDescription(`Adicionei **[${song[0].title}](${song[0].url})** na queue`)
+                .setThumbnail(song[0].thumbnail)
+                .setFooter({text: `Duração: ${song[0].duration}`})
         }
 
         if (!queue.playing) await queue.play()
