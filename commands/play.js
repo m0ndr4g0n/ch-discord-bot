@@ -49,7 +49,7 @@ module.exports = {
                 searchEngine: QueryType.YOUTUBE_VIDEO,
             })
 
-            if (result.tracks.lenght === 0){
+            if (result.tracks.length === 0){
                 await interaction.reply ("Não achei sua música men")
                 return
             }
@@ -71,20 +71,19 @@ module.exports = {
             })
 
             if (result.tracks.length === 0){
-                await interaction.reply("Não achei sua playlist men")
+                await interaction.reply("Nao funciona essa MERDA")
                 return
             }
-
-            const tracks = result.tracks
-            await queue.addTracks(tracks)
-
-            for (let i = 0; i < tracks.length; i++) {
-                const track = tracks[i];
-                embed
-                    .setDescription(`Adicionei **[${track.title}](${track.url})** na queue`)
-                    .setThumbnail(track.thumbnail)
-                    .setFooter({text: `Duração: ${track.duration}`});
+            if (result.tracks.length === 0){
+                console.log(result.tracks.length)
+                return
             }
+            const playlist = result.playlist
+            await queue.addTracks(result.tracks)
+            
+                embed
+                .setDescription(`*${result.tracks.length} as músicas que vc pediu de [${playlist.title}](${playlist.url})* foram adicionadas a queue`)
+ 
         }
         else if(interaction.options.getSubcommand() === "search"){
             let url = interaction.options.getString("searchterms")
@@ -94,7 +93,7 @@ module.exports = {
                 searchEngine: QueryType.AUTO,
             })
 
-            if (result.tracks.lenght === 0){
+            if (result.tracks.length === 0){
                 await interaction.reply ("Não achei nada men")
                 return
             }
