@@ -71,7 +71,7 @@ module.exports = {
             })
 
             if (result.tracks.length === 0){
-                await interaction.reply("Nao funciona essa MERDA")
+                await interaction.reply("Não encontrei a playlist, caro irmão Masqueico")
                 return
             }
             if (result.tracks.length === 0){
