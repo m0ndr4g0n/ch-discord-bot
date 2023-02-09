@@ -29,6 +29,17 @@ module.exports = {
                     .setDescription("link do youtube")
                     .setRequired(true)
             })
+    })
+    .addSubcommand(subcommand => {
+        subcommand
+            .setName("musica")
+            .setDescription("Toca uma música do Youtube")
+            addStringOption(option =>{
+                option 
+                    .setName("url")
+                    .setDescription("url da música")
+                    .setRequired(true)
+            })
     }),
     execute: async ({client, interaction}) => {
         if (!interaction.member.voice.channel){
@@ -41,7 +52,7 @@ module.exports = {
         if (!queue.connection) await queue.connect(interaction.member.voice.channel)
 
         let embed = new EmbedBuilder()
-        if(interaction.options.getSubcommand() === "song"){
+        if(interaction.options.getSubcommand() === "musica"){
             let url = interaction.options.getString("url")
 
             const result = await client.player.search(url, {

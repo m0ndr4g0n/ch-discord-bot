@@ -8,7 +8,7 @@ module.exports = {
     execute: async ({client, interaction}) => {
         const queue = client.player.getQueue(interaction.guild)
 
-        if(!queue || ! queue.playing ) {
+        if(!queue || !queue.playing ) {
             await interaction.reply('Não tem nada tocando')
             return
         }
