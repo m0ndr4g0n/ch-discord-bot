@@ -31,11 +31,11 @@ module.exports = {
             })
     })
     .addSubcommand(subcommand => {
-        subcommand
+        return subcommand
             .setName("musica")
             .setDescription("Toca uma música do Youtube")
-            addStringOption(option =>{
-                option 
+            .addStringOption(option =>{
+                return option 
                     .setName("url")
                     .setDescription("url da música")
                     .setRequired(true)
